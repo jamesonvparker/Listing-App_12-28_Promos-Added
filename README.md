@@ -1,2 +1,2 @@
-# Listing-App_12-28_Promos-Added
+# React-Firebase-Firstore-Auth-Template
 Created with CodeSandbox
