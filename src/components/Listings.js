@@ -87,17 +87,30 @@ function Listings() {
   };
 
   const removeFromSubscriptions = async (listing) => {
-    console.log("removeFromSubs clicked", listing);
+    // console.log("removeFromSubs clicked", listing);
 
-    const subscriptionsRef = doc(db, "subscriptions", userID),
+    const userSubscriptionsRef = doc(db, "subscriptions", userID),
+      listingSubscriptionsRef = doc(db, "listings", listing.id),
       lid = listing.id,
-      filtered = mySubscriptions.filter((sub) => sub !== lid);
+      filteredUserSubscriptions = mySubscriptions.filter((sub) => sub !== lid);
 
-    setMySubscriptions(filtered);
+    const docSnap = await getDoc(listingSubscriptionsRef);
+    const listingSubscribers = docSnap.data().subscribers || [];
+    const filteredListingSubscribers = listingSubscribers.filter(
+      (sub) => sub !== userID
+    );
+
+    setMySubscriptions(filteredUserSubscriptions);
+
+    if (listingSubscribers.includes(userID)) {
+      await updateDoc(listingSubscriptionsRef, {
+        subscribers: [...filteredListingSubscribers]
+      });
+    }
 
     try {
       await setDoc(
-        subscriptionsRef,
+        userSubscriptionsRef,
         { listings: mySubscriptions.filter((sub) => sub !== lid) },
         { merge: "true" }
       );
