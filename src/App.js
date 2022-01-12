@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import "./styles.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,29 +16,27 @@ import MyListingsPage from "./Pages/MyListingsPage";
 import NewListingPage from "./Pages/NewListingPage";
 import NewPromoPage from "./Pages/NewPromoPage";
 import PromoPage from "./Pages/PromoPage";
+import OneSignal from "react-onesignal";
+import HomeLayout from "./Pages/HomeLayout";
 
 export default function App() {
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [loginEmail, setLogin] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-
-  const register = async () => {};
-
-  const login = async () => {};
-
-  const logout = async () => {};
+  useEffect(() => {
+    OneSignal.init({
+      appId: "0b115317-080f-452f-87c8-96f17c02595a"
+    });
+  }, []);
 
   return (
     <div className="App">
       <Router>
         <div className="columns is-mobile is-flex-direction-column is-fullheight-100vh is-marginless">
           <header className="column is-narrow">
-            <Navbar register={register} login={login} logout={logout} />
+            <Navbar />
           </header>
-          <div className="column is-paddingless">
+          <div className="column is-paddingless flex-basis-unset">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/layout" element={<HomeLayout />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/my-account" element={<AccountPage />} />
               <Route path="/my-account/listings" element={<MyListingsPage />} />
@@ -53,15 +51,7 @@ export default function App() {
                 element={<PromoPage />}
               />
 
-              {/* <Route path="/" element={<Home />} />
-                  <Route path="/listing/:id" element={<Listing />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/profile/:username" element={<Profile />} />
-                  <Route path="/create" element={<Create />} />
-                  <Route path="/new/listing" element={<NewListing />} />
-                  <Route path="/slide/:id" element={<SlideDetail />} />
-                  <Route path="*" element={<ErrorPage />} /> */}
+              {/* <Route path="*" element={<ErrorPage />} /> */}
             </Routes>
           </div>
           <footer className="column is-narrow is-paddingless">

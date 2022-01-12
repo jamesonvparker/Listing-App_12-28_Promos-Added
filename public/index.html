@@ -28,6 +28,7 @@
       src="https://kit.fontawesome.com/cc0a3d25a4.js"
       crossorigin="anonymous"
     ></script>
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -55,82 +56,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-
-    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-messaging.js"></script>
-
-    <script type="text/javascript">
-      try {
-        if (!firebase.apps.length) {
-          const firebaseConfig = {
-            //from firebase project setting
-            apiKey: "AIzaSyDfHUbVW8mxLbcVkMl_eMcfAccFNsAV-j4",
-            authDomain: "slidecontroller-43511.firebaseapp.com",
-            projectId: "slidecontroller-43511",
-            storageBucket: "slidecontroller-43511.appspot.com",
-            messagingSenderId: "344633352168",
-            appId: "1:344633352168:web:1e83090e57441e17098e5d",
-            measurementId: "G-PR59J14DLG"
-          };
-          firebase.initializeApp(firebaseConfig);
-        }
-
-        const messaging = firebase.messaging();
-
-        messaging.onMessage((payload) => {
-          console.log("Message received. ", payload);
-
-          const notificationTitle = "OnMessage Title";
-          const notificationOptions = {
-            body: "OnMessage body."
-          };
-
-          return self.registration.showNotification(
-            notificationTitle,
-            notificationOptions
-          );
-        });
-
-        function resetUI() {
-          const vapidKey =
-            "BMMk7m-wgyGsRCDjEDDIU7eGY_sh0QDW5wkBpszzYloBQZnkFBvUv993GnKeLoB_GjA1c00aE57c20maewEASHQ"; //from firebase project settings
-          messaging
-            .getToken({ vapidKey: vapidKey })
-            .then((currentToken) => {
-              if (currentToken) {
-                //..
-                console.log(
-                  "working, current messaging token is: ",
-                  currentToken
-                );
-              } else {
-                console.log(
-                  "No registration token available. Request permission to generate one."
-                );
-                requestPermission();
-              }
-            })
-            .catch((err) => {
-              console.log("An error occurred while retrieving token. ", err);
-            });
-        }
-
-        function requestPermission() {
-          console.log("Requesting permission...");
-          Notification.requestPermission().then((permission) => {
-            if (permission === "granted") {
-              console.log("Notification permission granted.");
-              resetUI();
-            } else {
-              console.log("Unable to get permission to notify.");
-            }
-          });
-        }
-
-        resetUI();
-      } catch (e) {
-        console.log("firebase startup error ", e);
-      }
-    </script>
   </body>
 </html>

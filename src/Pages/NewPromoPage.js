@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function NewPromoPage() {
+function NewPromoPage({ handleTagging }) {
   const [promoTypes, setPromoTypes] = useState([]);
   const promoTypesCollectionRef = collection(db, "promoTypes");
   const promosCollectionRef = collection(db, "promos");
@@ -115,6 +115,7 @@ function NewPromoPage() {
       adminID,
       category
     });
+    handleTagging("promotion");
     navigate("/my-account/listings");
   };
 

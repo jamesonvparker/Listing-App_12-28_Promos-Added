@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
+import logo from "../assets/img/hereqr-webapp-logo.png";
 
 function Navbar() {
   const [user, setUser] = useState({});
@@ -25,11 +26,7 @@ function Navbar() {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
-          />
+          <img src={logo} width="112" height="28" />
         </Link>
 
         <a
@@ -51,8 +48,8 @@ function Navbar() {
         className={`${menuToggle ? "is-active" : ""} navbar-menu`}
       >
         <div className="navbar-start">
-          <Link to="/" className="navbar-item">
-            Home
+          <Link to="/layout" className="navbar-item">
+            Home Layout
           </Link>
 
           {user ? (

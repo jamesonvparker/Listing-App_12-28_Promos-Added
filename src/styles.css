@@ -2,3 +2,15 @@
   font-family: sans-serif;
   /* text-align: center; */
 }
+
+.promo-box {
+  background-color: green;
+}
+
+.flex-basis-unset {
+  flex-basis: unset;
+}
+
+.is-red {
+  color: red;
+}
